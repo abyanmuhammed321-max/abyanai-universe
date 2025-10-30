@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AbyanAI Universe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+    }
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #16213e;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      padding: 2rem;
+    }
+    .video-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+    }
+    .chat-section {
+      margin-top: 3rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .chat-box {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #fafafa;
+    }
+    .chat-input {
+      display: flex;
+      gap: 1rem;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.5rem;
+    }
+    .chat-input button {
+      padding: 0.5rem 1rem;
+    }
+    footer {
+      background: #0f3460;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    .contact-form {
+      margin-top: 2rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚀 AbyanAI Universe</h1>
+    <p>Explore AI, Chatbots, and YouTube Knowledge</p>
+  </header>
+
+  <nav>
+    <a href="#videos">Videos</a>
+    <a href="#chat">Chat AI</a>
+    <a href="#contact">Contact</a>
+  </nav>
+      <section id="chat" class="chat-section">
+      <h2>💬 Chat with AbyanAI</h2>
+      <div class="chat-box" id="chatBox">
+        <p><strong>AI:</strong> Hello! Ask me anything about AI, tech, or life!</p>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-form">
+      <h2>📬 Contact Us</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea rows="4" placeholder="Your Message"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 AbyanAI Universe. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chatBox = document.getElementById("chatBox");
+      const userText = input.value.trim();
+      if (userText) {
+        chatBox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+        // Simulated AI response
+        setTimeout(() => {
+          chatBox.innerHTML += `<p><strong>AI:</strong> I'm thinking... Here's something interesting about "${userText}".</p>`;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+        input.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
+<script>
+  async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+    const userText = input.value.trim();
+    if (userText) {
+      chatBox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+      input.value = "";
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_API_KEY"
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: userText }]
+        })
+      });
+      const data = await response.json();
+      const aiReply = data.choices[0].message.content;
+      chatBox.innerHTML += `<p><strong>AI:</strong> ${aiReply}</p>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }
+</script>
+<iframe
+  allow="microphone;"
+  width="350"
+  height="500"
+  src="https://console.dialogflow.com/api-client/demo/embedded/YOUR_AGENT_ID">
+</iframe>
